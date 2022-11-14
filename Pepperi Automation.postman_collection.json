@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "b43cd486-010f-4091-967e-df70c809fdf8",
+		"name": "Pepperi Automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16060589"
+	},
+	"item": [
+		{
+			"name": "post-bulk-json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Bulk Json export was successful\", function () {\r",
+							"  pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Confirm response message\", function () {\r",
+							"  var jsonData = pm.response.json();\r",
+							"  pm.expect(jsonData.message).to.eql(\"Json Successfully exported\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "L3mFe%",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "mathias.k@pepperi.com",
+							"type": "string"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Pepperi-ConsumerKey",
+						"type": "text",
+						"value": "16GmqjAy1Jj3Dbx2RnlntoGGgn5ldtkn"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Headers\":[\"MainCategory\",\"ExternalID\", \"Name\"],\r\n    \"Lines\": [\r\n[\"Test\",\"01\",\"a\"],\r\n[\"Test\",\"02\",\"b\"],\r\n[\"Test\",\"03\",\"c\"],\r\n[\"Test\",\"04\",\"d\"],\r\n[\"Test\",\"05\",\"e\"],\r\n[\"Test\",\"06\",\"f\"],\r\n[\"Test\",\"07\",\"g\"],\r\n[\"Test\",\"08\",\"h\"],\r\n[\"Test\",\"09\",\"i\"]\r\n]\r\n}"
+				},
+				"url": {
+					"raw": "https://api.pepperi.com/v1.0/bulk/items/json",
+					"protocol": "https",
+					"host": [
+						"api",
+						"pepperi",
+						"com"
+					],
+					"path": [
+						"v1.0",
+						"bulk",
+						"items",
+						"json"
+					],
+					"query": [
+						{
+							"key": "overwrite",
+							"value": "null",
+							"description": "Behaviour of bulk upload. Optional values: none,selective,full. none = data is not overwritten by this upload (default), selective = only data of the same item type uploaded is overwritten , full = all the items data is overwritten by this data upload.",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Starts a new async bulk upload job that upserts (updates/inserts) multiple {resource_name} data as a list of headers and lines. This async request returns a Job ID and URI to query the job’s status. ExternalID is required in case of insert and either InternalID or ExternalID are required in case of update.\r\n"
+			},
+			"response": []
+		}
+	]
+}
